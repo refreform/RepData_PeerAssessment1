@@ -1,0 +1,99 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Reproducible Research: Peer Assessment 1},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Reproducible Research: Peer Assessment 1}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\subsection{Loading and preprocessing the
+data}\label{loading-and-preprocessing-the-data}
+
+library(dplyr) data = ``activity.csv'' raw\_activity\_data =
+read.csv(data)
+
+\subsection{What is mean total number of steps taken per
+day?}\label{what-is-mean-total-number-of-steps-taken-per-day}
+
+raw\_activity\_data \%\textgreater\% group\_by(date) \%\textgreater\%
+summarise(total = sum(steps)) -\textgreater{} steps\_by\_day
+histogram\textless-hist(steps\_by\_day\$total) print(histogram)
+
+steps\_daily\_numeric\textless-sapply(steps\_by\_day\$total,as.numeric)
+mean\_steps \textless- mean(steps\_daily\_numeric) median\_steps
+\textless- median(steps\_daily\_numeric)
+
+\subsection{What is the average daily activity
+pattern?}\label{what-is-the-average-daily-activity-pattern}
+
+\subsection{Imputing missing values}\label{imputing-missing-values}
+
+\subsection{Are there differences in activity patterns between weekdays
+and
+weekends?}\label{are-there-differences-in-activity-patterns-between-weekdays-and-weekends}
+
+\end{document}
